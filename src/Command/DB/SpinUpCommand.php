@@ -99,7 +99,10 @@ class SpinUpCommand extends Command
 
         $this->databaseService->setConnection($connection);
         $this->databaseService->createDatabase($slug);
-        $this->databaseService->grantDatabaseToOwner($slug, $owner);
+
+        if ($input->getOption('ownerUsername') !== null) {
+            $this->databaseService->grantDatabaseToOwner($slug, $owner);
+        }
 
         $output->writeln($slug);
 

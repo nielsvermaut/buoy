@@ -95,7 +95,7 @@ class DatabaseService
         $this->connection->query('USE ' . $databaseName);
 
         $query = $this->connection->query(
-            sprintf("GRANT ALL PRIVILEGES on `%s`.* to '%s'@'%s'", $databaseName, $owner, '%')
+            sprintf("GRANT ALL ON `%s`.* TO '%s'@`%%`", $databaseName, $owner)
         );
 
         $query->bindValue('databaseName', $databaseName);
