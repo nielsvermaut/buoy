@@ -40,7 +40,6 @@ buoy:
 
 
   # Runs good ol' classic webhooks.
-  # WARNING: This is not implemented yet!
   webhooks:
     custom_webhook:
 
