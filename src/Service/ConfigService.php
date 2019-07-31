@@ -81,6 +81,24 @@ class ConfigService
     /**
      * @param string $group
      *
+     * @return array|Webhook[]
+     */
+    public function getWebhooksForGroup(string $group): array
+    {
+        $webhooks = array_filter($this->getConfig()->getWebhooks(), static function (Webhook $webhook) use ($group) {
+            return $webhook->getGroup() === $group;
+        });
+
+        uasort($webhooks, static function (Webhook $current, Webhook $next) {
+            return $current->getOrder() <=> $next->getOrder();
+        });
+
+        return array_values($webhooks);
+    }
+
+    /**
+     * @param string $group
+     *
      * @return array
      */
     public function getScriptsForGroup(string $group = 'default'): array

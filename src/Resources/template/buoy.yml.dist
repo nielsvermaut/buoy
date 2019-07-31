@@ -66,7 +66,7 @@ buoy:
       runs_on:
         - 'after_spinup'
 
-      # If set to true, we'll send the database_name and ownerwith the webhook on respectively the key
+      # If set to true, we'll send the database_name and owner with the webhook on respectively the key
       # "buoy_database_name" and "buoy_database_owner". This will only work on "after_spinup".
       include_context: false
 

@@ -9,6 +9,7 @@ use Buoy\Command\DB\SpinUpCommand;
 use Buoy\Command\File\GetFileGroupCommand;
 use Buoy\Command\InitConfigCommand;
 use Buoy\Command\File\ReplaceParametersCommand;
+use Buoy\Command\Webhook\RunWebhookGroupCommand;
 use Buoy\Container\BuoyContainerBuilder;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -83,6 +84,7 @@ class Kernel
             $this->container->get(InitConfigCommand::class),
             $this->container->get(ReplaceParametersCommand::class),
             $this->container->get(GetFileGroupCommand::class),
+            $this->container->get(RunWebhookGroupCommand::class),
         ];
     }
 }

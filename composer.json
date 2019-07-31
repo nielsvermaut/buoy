@@ -20,7 +20,8 @@
         "nubs/random-name-generator": "^2.1",
         "cocur/slugify": "^3.2",
         "guzzlehttp/guzzle": "^6.3",
-        "ramsey/uuid": "^3.8"
+        "ramsey/uuid": "^3.8",
+        "spatie/emoji": "^2.1"
     },
     "autoload": {
         "psr-4": {"Buoy\\": "src/"}

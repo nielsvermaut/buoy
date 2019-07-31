@@ -10,14 +10,17 @@ class Webhook
     /** @var string */
     private $url;
 
-    /** @var array */
-    private $payload;
+    /** @var array|null */
+    private $payload = null;
 
     /** @var string */
     private $method;
 
     /** @var array */
     private $headers;
+
+    /** @var string|null */
+    private $group;
 
     /** @var int */
     private $order = 999;
@@ -71,7 +74,7 @@ class Webhook
     /**
      * @return array
      */
-    public function getPayload(): array
+    public function getPayload(): ?array
     {
         return $this->payload;
     }
@@ -184,6 +187,26 @@ class Webhook
     public function setIncludeContext(bool $includeContext): Webhook
     {
         $this->includeContext = $includeContext;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string $group
+     *
+     * @return Webhook
+     */
+    public function setGroup(string $group): Webhook
+    {
+        $this->group = $group;
 
         return $this;
     }

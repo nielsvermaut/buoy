@@ -62,9 +62,12 @@ class ConfigFactory
                 ->setName($webhookName)
                 ->setRunsOn($webhookContent['runs_on'] ?? [])
                 ->setOrder($webhookContent['order'] ?? 999)
+                ->setMethod($webhookContent['method'] ?? 'GET')
                 ->setPayload($webhookContent['payload'] ?? [])
                 ->setHeaders($webhookContent['headers'] ?? [])
                 ->setIncludeContext($webhookContent['include_context'] ?? false)
+                ->setGroup($webhookContent['group'] ?? 'default')
+                ->setUrl($webhookContent['url'])
             ;
         }
 

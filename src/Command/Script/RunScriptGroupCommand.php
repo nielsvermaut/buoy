@@ -1,6 +1,6 @@
 <?php
 
-namespace Buoy\Command;
+namespace Buoy\Command\Script;
 
 use Buoy\Model\Script;
 use Buoy\Service\ConfigService;

@@ -1,0 +1,35 @@
+buoy:
+  version: 1
+
+  # Runs good ol' classic webhooks.
+  # WARNING: This is not implemented yet!
+  webhooks:
+    custom_webhook:
+
+      # Where does the webhook need to be sent
+      url: https://buoy-test.free.beeceptor.com/another-path
+
+      # Payload we'll send in the POST data, only applicable on method POST. You can use the buoy variable
+      # notation here as well.
+      payload:
+        payload_to_be_send: "{% PAYLOAD_DATA %}"
+
+      # How do we send the webhook, only GET and POST are supported
+      method: POST
+
+      #Allows you to set headers
+      headers:
+        Authorization: "Bearer {% WEBHOOK_TOKEN %}"
+        Content-Type: "application/json"
+
+      # Allows you to order the webhooks, if not set, it will be 999
+      order: 1
+
+      # The events/hooks the command will be run on.
+      # Available events/hooks: before_spinup, after_spinup, before_cleanup, after_cleanup
+      runs_on:
+        - 'after_spinup'
+
+      # If set to true, we'll send the database_name and owner with the webhook on respectively the key
+      # "buoy_database_name" and "buoy_database_owner". This will only work on "after_spinup".
+      include_context: false
