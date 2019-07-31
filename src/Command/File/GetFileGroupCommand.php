@@ -1,6 +1,6 @@
 <?php
 
-namespace Buoy\Command;
+namespace Buoy\Command\File;
 
 use Buoy\Model\File;
 use Buoy\Service\ConfigService;

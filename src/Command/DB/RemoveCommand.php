@@ -70,7 +70,6 @@ class RemoveCommand extends Command
             return 1;
         }
 
-
         $this->databaseService->setConnection($connection);
         $this->databaseService->deleteDatabase($databaseName);
 

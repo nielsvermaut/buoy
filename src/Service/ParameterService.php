@@ -6,13 +6,15 @@ class ParameterService
 {
     public function replaceParameterInFile(string $path, string $parameter, string $value): void
     {
-        $filePath = getcwd() . $path;
+        $filePath = getcwd() . '/'. $path;
 
         if (!file_exists($filePath)) {
             throw new \InvalidArgumentException(
-                'The given path %s does not exist. Looked in %s',
-                $path,
-                $filePath
+                sprintf(
+                    'The given path %s does not exist. Looked in %s',
+                    $path,
+                    $filePath
+                )
             );
         }
 

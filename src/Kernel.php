@@ -6,10 +6,9 @@ namespace Buoy;
 
 use Buoy\Command\DB\RemoveCommand;
 use Buoy\Command\DB\SpinUpCommand;
-use Buoy\Command\GetFileGroupCommand;
+use Buoy\Command\File\GetFileGroupCommand;
 use Buoy\Command\InitConfigCommand;
-use Buoy\Command\ReplaceParametersCommand;
-use Buoy\Command\RunScriptGroupCommand;
+use Buoy\Command\File\ReplaceParametersCommand;
 use Buoy\Container\BuoyContainerBuilder;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;

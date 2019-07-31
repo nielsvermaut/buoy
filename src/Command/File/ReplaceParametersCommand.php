@@ -1,11 +1,12 @@
 <?php
 
-namespace Buoy\Command;
+namespace Buoy\Command\File;
 
 use Buoy\Model\Script;
 use Buoy\Service\ConfigService;
 use Buoy\Service\ParameterService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +24,8 @@ class ReplaceParametersCommand extends Command
     public function __construct(ParameterService $parameterService)
     {
         parent::__construct(self::NAME);
+
+        $this->addArgument('files', InputArgument::IS_ARRAY);
 
         $this->addOption(
             'parameter',
@@ -44,17 +47,16 @@ class ReplaceParametersCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $filePaths = $input->getArguments();
+        $filePaths = $input->getArgument('files');
         $parameter = $input->getOption('parameter');
         $value = $input->getOption('value');
-
 
         $failedCount = 0;
 
         foreach ($filePaths as $filePath) {
             try {
                 $this->parameterService->replaceParameterInFile($filePath, $parameter, $value);
-            } catch (\Exception $e) {
+            } catch (\InvalidArgumentException $e) {
                 $failedCount = $failedCount + 1;
                 $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             }
