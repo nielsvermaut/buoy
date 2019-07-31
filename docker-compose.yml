@@ -1,0 +1,11 @@
+version: "3"
+services:
+  mysql:
+    image: mariadb:10
+    ports:
+      - 33306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "abc"
+      MYSQL_DATABASE: "buoy"
+      MYSQL_USER: "buoy"
+      MYSQL_PASSWORD: "buoy"

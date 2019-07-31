@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+define('BUOY_PATH', realpath(__DIR__ . '/..'));
+
+require BUOY_PATH . '/vendor/autoload.php';
+
+
+try {
+    $kernel = new Buoy\Kernel(BUOY_PATH);
+
+    $kernel->getApplication()->run();
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}

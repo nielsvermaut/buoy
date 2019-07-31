@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Buoy\:
+    resource: '../../../src/*'
+    exclude: '../../../src/{Kernel.php,Repository}'
