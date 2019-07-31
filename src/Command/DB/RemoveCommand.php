@@ -3,45 +3,32 @@
 namespace Buoy\Command\DB;
 
 use Buoy\Factory\ConnectionFactory;
-use Buoy\Service\ConfigService;
 use Buoy\Service\DatabaseService;
-use Buoy\Service\ScriptService;
 use Cocur\Slugify\Slugify;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RemoveCommand extends Command
 {
-    private const NAME = 'db:spin-up';
+    private const NAME = 'db:remove';
 
     /** @var DatabaseService */
     private $databaseService;
-
-    /** @var ConfigService */
-    private $configService;
-
-    /** @var ScriptService */
-    private $scriptService;
 
     /** @var ConnectionFactory */
     private $connectionFactory;
 
     public function __construct(
         DatabaseService $databaseService,
-        ConfigService $configService,
-        ScriptService $scriptService,
         ConnectionFactory $connectionFactory
     ) {
         parent::__construct(self::NAME);
 
         $this->databaseService = $databaseService;
-        $this->configService = $configService;
-        $this->scriptService = $scriptService;
         $this->connectionFactory = $connectionFactory;
     }
 
@@ -49,20 +36,14 @@ class RemoveCommand extends Command
     {
         $this->addArgument('serverUrl', InputArgument::REQUIRED, 'The server URL buoy is going to connect to');
 
-        $this->addOption(
-            'ownerUsername',
+        $this->addArgument(
+            'databaseName',
             null,
-            InputOption::VALUE_OPTIONAL,
+            InputArgument::REQUIRED,
             'Defines a different owner than passed in the serverUrl'
         );
 
-        $this->addUsage(
-            'Will create a database in the supplied database url. It makes sure no collisions happen with the database '
-            . 'names by generating new ones, and tracking their usage in a special table. Make sure that in the '
-            . 'supplied server URL you pass user credentials with the power to remove and add database '
-            . 'credentials. By default, the database will be owned the same user passed in the server URL, but '
-            . 'optionally, you can pass --ownerUsername for the database to be granted to this user.'
-        );
+        $this->addUsage('Will remove the supplied database in the supplied database url.');
     }
 
     /**
@@ -77,7 +58,7 @@ class RemoveCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $serverUrl = $input->getArgument('serverUrl');
-        $owner = $input->getOption('ownerUsername');
+        $databaseName = $input->getArgument('databaseName');
 
         $connection = $this->connectionFactory->create($serverUrl);
 
@@ -89,16 +70,11 @@ class RemoveCommand extends Command
             return 1;
         }
 
-        $owner = $owner === null ? $connection->getUsername() : $owner;
-
-        $name = (new \Nubs\RandomNameGenerator\Alliteration())->getName();
-        $slug = (new Slugify())->slugify($name, ['separator' => '_']);
 
         $this->databaseService->setConnection($connection);
-        $this->databaseService->createDatabase($slug);
-        $this->databaseService->grantDatabaseToOwner($slug, $owner);
+        $this->databaseService->deleteDatabase($databaseName);
 
-        $output->writeln($slug);
+        $output->writeln('Successfully removed ' . $databaseName);
 
         return 0;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Buoy;
 
+use Buoy\Command\DB\RemoveCommand;
 use Buoy\Command\DB\SpinUpCommand;
 use Buoy\Command\GetFileGroupCommand;
 use Buoy\Command\InitConfigCommand;
@@ -79,6 +80,7 @@ class Kernel
     {
         return [
             $this->container->get(SpinUpCommand::class),
+            $this->container->get(RemoveCommand::class),
             $this->container->get(InitConfigCommand::class),
             $this->container->get(ReplaceParametersCommand::class),
             $this->container->get(GetFileGroupCommand::class),
