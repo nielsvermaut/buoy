@@ -47,6 +47,14 @@ cleaner API by doing it this way. You can pass as many file names as you want.
 This works with more than just docker-compose files. This is handy when you want to use a just-built
 container for running tests against, or for passing your database name to your app.
 
+## buoy file:get-group [GROUP_NAME]
+
+Fetches the files defined in the buoy.yml.
+
+## buoy webhook:run-group [GROUP_NAME]
+
+Runs the webhooks defined in the buoy.yml.
+
 # Reference buoy.yml file
 
 ```
